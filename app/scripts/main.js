@@ -1,21 +1,41 @@
 'use strict';
 
-function setCookie(location){
-  var d = new Date();
-  d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
-  var expires = 'expires=' + d.toUTCString();
-  document.cookie = 'location=' + location + '; ' + expires;
+function goToRegion(region){
+  //This function will actually do the page redirect
+  console.log("window.location = '/' + " + region);
 }
 
-function getCookie() {
-  var name = 'location=';
-  var ca = document.cookie.split(';');
-  for(var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) === ' ') { c = c.substring(1); }
-      if (c.indexOf(name) === 0) { return c.substring(name.length, c.length); }
+function setLocation(location, persist){
+  //This function will set the location, either in session storage,
+  //or in cookie storage depending on if the persist checkbox is selected
+  if(persist){
+    var d = new Date();
+    //Save for 30 days
+    d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
+    var expires = 'expires=' + d.toUTCString();
+    document.cookie = 'location=' + location + '; ' + expires;
+  } else {
+    sessionStorage.location = location;
   }
-  return '';
+  console.log(location + ', ' + persist);
+  goToRegion(location);
+}
+
+function getLocation() {
+  //This function will retrieve the location from the session or cookie
+  var location = '';
+  location = sessionStorage.location;
+  if(location === ''){
+    //The location is not in sessionStorage, check cookies
+    var name = 'location=';
+    var ca = document.cookie.split(';');
+    for( var i = 0; i < ca.length; i++ ) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') { c = c.substring(1); }
+        if (c.indexOf(name) === 0) { location = c.substring(name.length, c.length); }
+    }
+  }
+  return location;
 }
 
 function deg2rad(deg){
@@ -37,6 +57,7 @@ function haversine(originLat, originLong, destLat, destLong){
 }
 
 function nearestRegion(position){
+
   var regions = [
     ['baltimore', 39.179, -76.845],
     ['birmingham', 33.483, -86.702],
@@ -59,27 +80,71 @@ function nearestRegion(position){
     }
   }
 
-  setCookie(regions[closest][1]);
+  $.when($('#remember').prop('checked')).done(function(data){
+    //Remember is a promise
+    setLocation(regions[closest][0], data);
+  });
 
 }
 
-function getLocation(){
+function getGeoLocation(){
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(nearestRegion);
   } else {
     // Geolocation API not supported
+    console.log('No location');
   }
 }
 
-function loadRegion() {
-    var region = getCookie();
-    if (region !== '') {
-        window.location = '/' + region;
-    } else {
-        getLocation();
+function clearLocation() {
+  sessionStorage.location = '';
+  document.cookie = 'location=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  console.log('Location cleared');
+}
+
+function loadRegion(withGeo) {
+  var region = getLocation();
+  if (region !== '') {
+    goToRegion(region);
+    //clearLocation();
+  } else {
+    if(withGeo){
+      console.log('Getting location');
+      getGeoLocation();
     }
+  }
+}
+
+function setRegionFromClick(region){
+  $.when($('#remember').prop('checked')).done(function(data){
+    //Remember is a promise
+    setLocation(region, data);
+  });
 }
 
 $(function(){
-  loadRegion();
+  //Page load
+
+  $('#geo').on('touchend click', function(e){
+    //Bind to the #geo button. Runs loadRegion and find geo
+    e.preventDefault();
+    loadRegion(true);
+  });
+
+  $('.region-link').on('touchend click', function(e){
+    //Bind to the region links, sets the region statically
+    e.preventDefault();
+    //alert(JSON.stringify(e));
+    var region = this.toString();
+    var splitRegion = region.split( '/' );
+    setRegionFromClick(splitRegion[splitRegion.length - 1]);
+  });
+
+  //After the binds, try to load the region from cookie or session storage
+  loadRegion(false);
+
+  $('#clear').on('touchend click', function(e){
+    e.preventDefault();
+    clearLocation();
+  });
 });
