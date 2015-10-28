@@ -32,6 +32,7 @@ body {
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;
+  text-align: center;
 
   /* Make the masthead heading the same height as the navigation */
   h3 {
@@ -57,6 +58,7 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
+  background-color: rgba(100,100,100,.7);
   .btn {
     font-size: 21px;
     padding: 14px 24px;
