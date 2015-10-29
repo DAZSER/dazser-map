@@ -65,6 +65,12 @@ body {
   }
 }
 
+.region {
+  a {
+    width: 100%;
+  }
+}
+
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;
@@ -77,6 +83,13 @@ body {
 @media screen and (min-width: 768px) {
   .container {
     max-width: 730px;
+  }
+
+  .left{
+    float:left;
+  }
+  .right{
+    float:right;
   }
 
   /* Remove the padding we set earlier */
