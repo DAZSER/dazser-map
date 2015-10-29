@@ -1,4 +1,8 @@
 {
+  "name": "dazser-map",
+  "version": "1.0.0",
+  "description": "Landing page for dazser.com",
+  "main": "index.html",
   "private": true,
   "engines": {
     "node": ">=0.12.0"
