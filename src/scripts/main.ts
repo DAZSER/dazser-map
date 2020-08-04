@@ -66,30 +66,45 @@ const isRemember = (): boolean => {
 
 const nearestRegion = (position: Position): void => {
   const regions = [
-    ["baltimore", 39.179, -76.845],
-    ["birmingham", 33.483, -86.702],
-    ["orlando", 28.565, -81.163],
-    ["tampa", 27.989, -82.736],
+    {
+      latitude: 39.179,
+      longitude: -76.845,
+      region: "baltimore",
+    },
+    {
+      latitude: 33.483,
+      longitude: -86.702,
+      region: "birmingham",
+    },
+    {
+      latitude: 28.565,
+      longitude: -81.163,
+      region: "orlando",
+    },
+    {
+      latitude: 27.989,
+      longitude: -82.736,
+      region: "tampa",
+    },
   ];
 
   let mindiff = 99999;
   let closest: number;
 
-  for (const [index, region] of regions.entries()) {
+  for (const [_index, region] of Object.entries(regions)) {
     const diff = haversine(
       position.coords.latitude,
       position.coords.longitude,
-      // @ts-ignore
-      region[1],
-      region[2]
+      region.latitude,
+      region.longitude
     );
     if (diff < mindiff) {
-      closest = index;
+      closest = region.region;
       mindiff = diff;
     }
   }
   // @ts-ignore
-  setLocation(regions[closest][0], isRemember());
+    setLocation(closest, isRemember());
 };
 
 const getGeoLocation = (): void => {
