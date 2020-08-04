@@ -1,0 +1,10 @@
+{
+  "extends": ["stylelint-config-twbs-bootstrap/scss"],
+  "rules": {
+    "block-no-empty": null,
+    "selector-class-pattern": null,
+    "selector-max-id": null,
+    "selector-no-qualifying-type": null,
+    declaration-no-important
+  }
+}

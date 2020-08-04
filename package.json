@@ -1,32 +1,36 @@
 {
   "name": "dazser-map",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Landing page for dazser.com",
   "main": "index.html",
   "private": true,
-  "engines": {
-    "node": ">=0.12.0"
-  },
-  "dependencies": {
-    "bootstrap-sass": "^3.3.5",
-    "jquery": "^2.1.4"
+  "dependencies": {},
+  "scripts": {
+    "build": "npm run clean && npm-run-all --parallel compile:*",
+    "clean": "rm -rf dist/**",
+    "lint:ts": "eslint 'src/**/*.ts'",
+    "lint:scss": "stylelint --config .stylelintrc --syntax scss \"src/**/*.scss\"",
+    "compile:scss": "node-sass --output-style compressed --omit-source-map-url --precision 6 src/styles/main.scss dist/styles/main.css",
+    "compile:images": "imagemin src/images/* --out-dir=dist/images",
+    "compile:ts": "tsc",
+    "compile:html": "cp src/robots.txt dist/ && cp src/index.html dist/ && cp src/favicon.ico dist/",
+    "serve": "npx http-server dist"
   },
   "devDependencies": {
-  },
-  "eslintConfig": {
-    "env": {
-      "node": true,
-      "browser": true
-    },
-    "rules": {
-      "quotes": [
-        2,
-        "single"
-      ]
-    },
-    "globals": {
-      "jQuery": false,
-      "$": false
-    }
+    "@sparticuz/eslint-config": "^2.1.2",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "eslint": "^7.6.0",
+    "imagemin-cli": "^6.0.0",
+    "inline-source-cli": "^2.0.0",
+    "node-sass": "^4.14.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.5",
+    "stylelint": "^13.6.1",
+    "stylelint-config-recommended-scss": "^4.2.0",
+    "stylelint-config-twbs-bootstrap": "^2.0.3",
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.18.0",
+    "typescript": "^3.9.7"
   }
 }

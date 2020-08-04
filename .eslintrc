@@ -1,0 +1,17 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "extends": ["@sparticuz/eslint-config"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "project": "./tsconfig.json",
+    "sourceType": "module"
+  }
+}
