@@ -141,9 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
   regionLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
-      // @ts-ignore
-      const region = this.toString();
-      const splitRegion = region.split("/");
+      const target = event.currentTarget as HTMLAnchorElement;
+      const splitRegion = target.href.split("/");
       setRegionFromClick(splitRegion[splitRegion.length - 1]);
     });
   });
