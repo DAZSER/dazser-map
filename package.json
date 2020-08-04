@@ -7,7 +7,7 @@
   "dependencies": {},
   "scripts": {
     "build": "npm run clean && npm-run-all --parallel compile:*",
-    "clean": "rm -rf dist/**",
+    "clean": "rm -rf dist/** && mkdir -p dist",
     "lint:ts": "eslint 'src/**/*.ts'",
     "lint:scss": "stylelint --config .stylelintrc --syntax scss \"src/**/*.scss\"",
     "compile:scss": "node-sass --output-style compressed --omit-source-map-url --precision 6 src/styles/main.scss dist/styles/main.css",
