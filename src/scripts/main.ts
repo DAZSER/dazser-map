@@ -125,8 +125,7 @@ const setRegionFromClick = (region: string): void => {
 
 document.addEventListener("DOMContentLoaded", () => {
   // Page load
-  // eslint-disable-next-line no-restricted-globals
-  if (location.search.split("clear=")[1]) {
+  if (window.location.search.split("clear=")[1]) {
     // If there is a ?clear=1 in the URL, clear the location
     clearLocation();
   }
