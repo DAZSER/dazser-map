@@ -64,9 +64,7 @@ const isRemember = (): boolean => {
   return false;
 };
 
-const nearestRegion = (position: {
-  coords: { latitude: number; longitude: number };
-}): void => {
+const nearestRegion = (position: Position): void => {
   const regions = [
     ["baltimore", 39.179, -76.845],
     ["birmingham", 33.483, -86.702],
