@@ -89,7 +89,7 @@ const nearestRegion = (position: Position): void => {
   ];
 
   let mindiff = 99999;
-  let closest: number;
+  let closest: string | undefined;
 
   for (const [_index, region] of Object.entries(regions)) {
     const diff = haversine(
@@ -103,8 +103,11 @@ const nearestRegion = (position: Position): void => {
       mindiff = diff;
     }
   }
-  // @ts-ignore
+  if (typeof closest === "string") {
     setLocation(closest, isRemember());
+  } else {
+    throw new TypeError("Failed to getLocation");
+  }
 };
 
 const getGeoLocation = (): void => {
