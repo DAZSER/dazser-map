@@ -16,7 +16,7 @@ const setLocation = (location: string, persist: boolean): void => {
     const expires = `expires=${d.toUTCString()}`;
     document.cookie = `location=${location}; ${expires}`;
   }
-  console.log(`${location}, ${(persist as unknown) as string}`);
+  console.log(`${location}, ${persist.toString()}`);
   goToRegion(location);
 };
 
