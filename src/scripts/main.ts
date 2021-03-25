@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable no-console */
 const goToRegion = (region: string): void => {
   // This function will actually do the page redirect
@@ -64,7 +63,7 @@ const isRemember = (): boolean => {
   return false;
 };
 
-const nearestRegion = (position: Position): void => {
+const nearestRegion: PositionCallback = (position): void => {
   const regions = [
     {
       latitude: 39.179,
@@ -91,6 +90,8 @@ const nearestRegion = (position: Position): void => {
   let mindiff = 99999;
   let closest: string | undefined;
 
+  // I'm not using the _index variable
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   for (const [_index, region] of Object.entries(regions)) {
     const diff = haversine(
       position.coords.latitude,
@@ -152,15 +153,20 @@ document.addEventListener("DOMContentLoaded", () => {
     loadRegion(true);
   });
 
-  const regionLinks = document.querySelectorAll(".region-link");
-  regionLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
+  const regionLinks = document.querySelectorAll<HTMLAnchorElement>(
+    ".region-link"
+  );
+  // @ts-expect-error We do have an iterable NodeListOf
+  for (const link of regionLinks) {
+    // link is an EventTarget type, but I can't cast the left side of the forof loop
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+    link.addEventListener("click", (event: Event) => {
       event.preventDefault();
       const target = event.currentTarget as HTMLAnchorElement;
       const splitRegion = target.href.split("/");
       setRegionFromClick(splitRegion[splitRegion.length - 1]);
     });
-  });
+  }
 
   loadRegion(false);
 });
