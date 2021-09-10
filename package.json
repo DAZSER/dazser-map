@@ -7,11 +7,11 @@
   "scripts": {
     "build": "npm run clean && npm-run-all --parallel compile:*",
     "clean": "rm -rf dist/** && mkdir -p dist",
-    "lint:ts": "eslint \"**/*.ts\"",
+    "lint:ts": "eslint \"**/*.[jt]s\" --cache",
     "lint:scss": "stylelint --config .stylelintrc --syntax scss \"src/**/*.scss\"",
     "compile:scss": "sass --no-source-map src/styles/main.scss:dist/styles/main.css",
     "compile:images": "imagemin src/images/* --out-dir=dist/images",
-    "compile:ts": "tsc",
+    "compile:ts": "tsc -p tsconfig.json",
     "compile:html": "cp src/robots.txt dist/ && cp src/index.html dist/ && cp src/favicon.ico dist/",
     "serve": "npx http-server dist"
   },
