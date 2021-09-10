@@ -10,7 +10,7 @@
     "lint:ts": "eslint \"**/*.[jt]s\" --cache",
     "lint:scss": "stylelint --config .stylelintrc --syntax scss \"src/**/*.scss\"",
     "compile:scss": "sass --no-source-map src/styles/main.scss:dist/styles/main.css",
-    "compile:images": "imagemin src/images/* --out-dir=dist/images",
+    "compile:images": "mkdir -p dist/images && cp src/images/jklogo.png dist/images/ && cp src/images/us.svg dist/images/",
     "compile:ts": "tsc -p tsconfig.json",
     "compile:html": "cp src/robots.txt dist/ && cp src/index.html dist/ && cp src/favicon.ico dist/",
     "serve": "npx http-server dist"
@@ -20,7 +20,6 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "imagemin-cli": "^6.0.0",
     "inline-source-cli": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
