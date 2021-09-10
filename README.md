@@ -5,3 +5,8 @@
 This is the initial Landing page for www.dazser.com
 
 Comes with Geolocation API
+
+
+## Build and deploy instructions
+- `npm run build`
+- Upload the `dist` folder to `/mnt/efs/fs1/wordpress/wp-content/themes/dazser-map`
