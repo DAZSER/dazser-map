@@ -24,11 +24,12 @@
     "downlevelIteration": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
-    "target": "es2018",
+    "target": "es6",
     "outDir": "dist",
     "rootDir": "src",
     "lib": [
-      "dom"
+      "DOM",
+      "ES6"
     ]
   },
   "exclude": [
