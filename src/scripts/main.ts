@@ -1,21 +1,26 @@
-/* eslint-disable no-console */
+/**
+ * goToRegion is the function that will actually do the page redirect
+ * @param region A string of the region to forward
+ */
 const goToRegion = (region: string): void => {
-  // This function will actually do the page redirect
   window.location.href = `/${region}`;
 };
 
+/**
+ * setLocation will set the location and, if persist is true, set the cookie
+ * @param location A string of the region
+ * @param persist A boolean, if true, will set the cookie
+ */
 const setLocation = (location: string, persist: boolean): void => {
-  // This function will set the location
-  // And set in cookie storage depending on if the persist checkbox is selected
   if (persist) {
     const d = new Date();
     // Save for 30 days
     // eslint-disable-next-line prettier/prettier
     d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
     const expires = `expires=${d.toUTCString()}`;
+    // eslint-disable-next-line unicorn/no-document-cookie
     document.cookie = `location=${location}; ${expires}`;
   }
-  console.log(`${location}, ${persist.toString()}`);
   goToRegion(location);
 };
 
@@ -87,12 +92,10 @@ const nearestRegion: PositionCallback = (position): void => {
     },
   ];
 
-  let mindiff = 99999;
+  let mindiff = 99_999;
   let closest: string | undefined;
 
-  // I'm not using the _index variable
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  for (const [_index, region] of Object.entries(regions)) {
+  for (const region of regions) {
     const diff = haversine(
       position.coords.latitude,
       position.coords.longitude,
@@ -114,15 +117,12 @@ const nearestRegion: PositionCallback = (position): void => {
 const getGeoLocation = (): void => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(nearestRegion);
-  } else {
-    // Geolocation API not supported
-    console.log("No location");
   }
 };
 
 const clearLocation = (): void => {
+  // eslint-disable-next-line unicorn/no-document-cookie
   document.cookie = "location=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-  console.log("Location cleared");
 };
 
 const loadRegion = (withGeo: boolean): void => {
@@ -131,7 +131,6 @@ const loadRegion = (withGeo: boolean): void => {
     goToRegion(region);
     // clearLocation();
   } else if (withGeo) {
-    console.log("Getting location");
     getGeoLocation();
   }
 };
@@ -153,9 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
     loadRegion(true);
   });
 
-  const regionLinks = document.querySelectorAll<HTMLAnchorElement>(
-    ".region-link"
-  );
+  const regionLinks =
+    document.querySelectorAll<HTMLAnchorElement>(".region-link");
   // @ts-expect-error We do have an iterable NodeListOf
   for (const link of regionLinks) {
     // link is an EventTarget type, but I can't cast the left side of the forof loop
@@ -167,6 +165,5 @@ document.addEventListener("DOMContentLoaded", () => {
       setRegionFromClick(splitRegion[splitRegion.length - 1]);
     });
   }
-
   loadRegion(false);
 });
