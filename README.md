@@ -12,3 +12,6 @@ Comes with Geolocation API
 ## Build and deploy instructions
 - `npm run dist` will run a build, then convert it to a wordpress compatible theme.
 - Upload the `dist` folder to `/mnt/efs/fs1/wordpress/wp-content/themes/dazser-map`
+  - `sudo rm -rf /mnt/efs/fs1/wordpress/wp-content/themes/dazser-map`
+  - `sudo mv ~/dist /mnt/efs/fs1/wordpress/wp-content/themes/dazser-map`
+  - `sudo chown www-data:www-data /mnt/efs/fs1/wordpress/wp-content/themes/dazser-map -R`
