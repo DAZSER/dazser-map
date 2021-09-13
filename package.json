@@ -4,6 +4,9 @@
   "description": "Landing page for dazser.com",
   "main": "index.html",
   "private": true,
+  "engines": {
+    "npm": ">=7.20.0"
+  },
   "scripts": {
     "build": "npm run clean && npm-run-all --parallel compile:*",
     "clean": "rm -rf .build dist && mkdir -p .build",
