@@ -1,6 +1,6 @@
 {
   "name": "dazser-map",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Landing page for dazser.com",
   "main": "index.html",
   "private": true,
