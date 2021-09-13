@@ -25,7 +25,7 @@
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "target": "es6",
-    "outDir": "dist",
+    "outDir": ".build",
     "rootDir": "src",
     "lib": [
       "DOM",
