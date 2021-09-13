@@ -6,14 +6,20 @@
   "private": true,
   "scripts": {
     "build": "npm run clean && npm-run-all --parallel compile:*",
-    "clean": "rm -rf dist/** && mkdir -p dist",
+    "clean": "rm -rf .build dist && mkdir -p .build",
     "lint:ts": "eslint \"**/*.[jt]s\" --cache",
     "lint:scss": "stylelint --config .stylelintrc --syntax scss \"src/**/*.scss\"",
-    "compile:scss": "sass --no-source-map src/styles/main.scss:dist/styles/main.css",
-    "compile:images": "mkdir -p dist/images && cp src/images/jklogo.png dist/images/ && cp src/images/us.svg dist/images/",
+    "compile:scss": "sass --no-source-map --style=compressed src/styles/main.scss:.build/styles/main.css",
+    "compile:images": "mkdir -p .build/images && cp src/images/jklogo.png .build/images/ && cp src/images/us.svg .build/images/",
     "compile:ts": "tsc -p tsconfig.json",
-    "compile:html": "cp src/robots.txt dist/ && cp src/index.html dist/ && cp src/favicon.ico dist/",
-    "serve": "npx http-server dist"
+    "compile:html": "cp src/robots.txt .build/ && cp src/index.html .build/ && cp src/favicon.ico .build/",
+    "test": "npm run build && npx http-server .build",
+    "dist": "npm run build && npm-run-all --sequential dist:cp dist:replace:stylesheet dist:replace:logo dist:replace:js",
+    "dist:cp": "cp -r .build dist && mv dist/index.html dist/index.php && mv dist/styles/main.css dist/style.css && rm -rf dist/styles",
+    "dist:replace:stylesheet": "sed -i 's|styles/main.css|<?php echo get_stylesheet_uri() ?>|g' dist/index.php",
+    "dist:replace:logo": "sed -i 's|images/jklogo.png|<?php echo get_template_directory_uri() ?>/images/jklogo.png|g' dist/index.php",
+    "dist:replace:js": "sed -i 's|scripts/main.js|<?php echo get_template_directory_uri() ?>/scripts/main.js|g' dist/index.php",
+    "dist:replace:version": "npm pkg get version | sed 's/\"//g' | sed -re \"s|1.0.0|${\\1}|g\" dist/style.css"
   },
   "devDependencies": {
     "@sparticuz/eslint-config": "^3.6.0",
