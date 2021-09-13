@@ -14,12 +14,12 @@
     "compile:ts": "tsc -p tsconfig.json",
     "compile:html": "cp src/robots.txt .build/ && cp src/index.html .build/ && cp src/favicon.ico .build/",
     "test": "npm run build && npx http-server .build",
-    "dist": "npm run build && npm-run-all --sequential dist:cp dist:replace:stylesheet dist:replace:logo dist:replace:js",
+    "dist": "npm run build && npm-run-all --sequential dist:cp dist:replace:stylesheet dist:replace:logo dist:replace:js dist:replace:version",
     "dist:cp": "cp -r .build dist && mv dist/index.html dist/index.php && mv dist/styles/main.css dist/style.css && rm -rf dist/styles",
     "dist:replace:stylesheet": "sed -i 's|styles/main.css|<?php echo get_stylesheet_uri() ?>|g' dist/index.php",
     "dist:replace:logo": "sed -i 's|images/jklogo.png|<?php echo get_template_directory_uri() ?>/images/jklogo.png|g' dist/index.php",
     "dist:replace:js": "sed -i 's|scripts/main.js|<?php echo get_template_directory_uri() ?>/scripts/main.js|g' dist/index.php",
-    "dist:replace:version": "npm pkg get version | sed 's/\"//g' | sed -re \"s|1.0.0|${\\1}|g\" dist/style.css"
+    "dist:replace:version": "sed -i \"s/1.0.0/$(npm pkg get version | sed 's/\"//g')/g\" dist/style.css"
   },
   "devDependencies": {
     "@sparticuz/eslint-config": "^3.6.0",
