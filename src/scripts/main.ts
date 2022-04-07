@@ -154,10 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const regionLinks =
     document.querySelectorAll<HTMLAnchorElement>(".region-link");
-  // @ts-expect-error We do have an iterable NodeListOf
   for (const link of regionLinks) {
     // link is an EventTarget type, but I can't cast the left side of the forof loop
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     link.addEventListener("click", (event: Event) => {
       event.preventDefault();
       const target = event.currentTarget as HTMLAnchorElement;

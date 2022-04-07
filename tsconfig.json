@@ -29,7 +29,8 @@
     "rootDir": "src",
     "lib": [
       "DOM",
-      "ES6"
+      "ES6",
+      "DOM.Iterable"
     ]
   },
   "exclude": [
