@@ -10,7 +10,7 @@
   "scripts": {
     "build": "npm run clean && npm-run-all --parallel compile:*",
     "clean": "rm -rf .build dist && mkdir -p .build",
-    "lint:ts": "eslint \"**/*.[jt]s\" --cache",
+    "lint:ts": "eslint \"**/*.[jt]s\"",
     "lint:scss": "stylelint --config .stylelintrc \"src/**/*.scss\"",
     "compile:scss": "sass --no-source-map --style=compressed src/styles/main.scss:.build/styles/main.css",
     "compile:images": "mkdir -p .build/images && cp src/images/jklogo.png .build/images/ && cp src/images/us.svg .build/images/",
@@ -25,20 +25,20 @@
     "dist:replace:version": "sed -i \"s/1.0.0/$(npm pkg get version | sed 's/\"//g')/g\" dist/style.css"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.1.1",
-    "@sparticuz/eslint-config": "^6.2.0",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
-    "eslint": "^8.12.0",
+    "@rushstack/eslint-patch": "^1.1.4",
+    "@sparticuz/eslint-config": "^7.1.3",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
     "inline-source-cli": "^2.0.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.6.2",
-    "sass": "^1.50.0",
-    "stylelint": "^14.6.1",
-    "stylelint-config-recommended-scss": "^6.0.0",
-    "stylelint-config-twbs-bootstrap": "^3.0.1",
+    "prettier": "^2.7.1",
+    "sass": "^1.54.0",
+    "stylelint": "^14.9.1",
+    "stylelint-config-recommended-scss": "^7.0.0",
+    "stylelint-config-twbs-bootstrap": "^5.0.0",
     "stylelint-order": "^5.0.0",
-    "stylelint-scss": "^4.2.0",
-    "typescript": "^4.6.3"
+    "stylelint-scss": "^4.3.0",
+    "typescript": "^4.7.4"
   }
 }
